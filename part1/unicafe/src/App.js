@@ -20,6 +20,12 @@ function App() {
       <h3>neutral { neutral }</h3>
 
       <h3>bad { bad }</h3>
+      
+      <h3>all { bad + neutral + good }</h3>
+      
+      <h3>average {(good + neutral + bad)/3}</h3>
+      
+      <h3>positive { (good/(good + neutral + bad)) * 100 } %</h3>
 
     </div>
   );
