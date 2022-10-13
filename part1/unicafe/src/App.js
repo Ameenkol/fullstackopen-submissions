@@ -11,15 +11,40 @@ const StatisticLine = ({value, text}) => (
 const Statistics = (props) => {
   const sum = props.good + props.neutral + props.bad
   return (
-  <div>
-    <StatisticLine text='good' value={props.good} />
-    <StatisticLine text='neutral' value={props.neutral} />
-    
-    <StatisticLine text='bad' value={props.bad} />
-    <StatisticLine text='all' value={sum} />
-    
-    <StatisticLine text='average' value={sum/3} />
-    <StatisticLine text='positive' value={ props.good * 100 / sum + '%'}/>
+    <div>
+      <table>
+        <tbody>
+          <tr>
+            <td><StatisticLine text='good' /></td>
+            <td><StatisticLine value={props.good} /></td>  
+          </tr>
+
+          <tr>
+            <td><StatisticLine text='neutral' /></td>
+            <td><StatisticLine value={props.neutral} /></td>
+          </tr>
+
+          <tr>
+            <td><StatisticLine text='bad' /></td>
+            <td><StatisticLine value={props.bad} /></td>
+          </tr>
+
+          <tr>
+            <td><StatisticLine text='all' /></td>
+            <td><StatisticLine value={sum} /></td>
+          </tr>
+
+          <tr>
+            <td><StatisticLine text='average' /></td>
+            <td><StatisticLine value={sum/3} /></td>
+          </tr>
+
+          <tr>
+            <td><StatisticLine text='positive' /></td>
+            <td><StatisticLine value={props.good * 100 / sum + '%'} /></td>
+          </tr> 
+        </tbody>
+      </table>
     
     </div>
   )}
@@ -42,7 +67,7 @@ function App() {
 
       <h2>Statistics </h2>
       {!(good || bad || neutral) ? <h4>No feedback given</h4> :
-        <>    
+        <> 
           <Statistics good={good} bad={bad} neutral={neutral} />
         </>
       }
