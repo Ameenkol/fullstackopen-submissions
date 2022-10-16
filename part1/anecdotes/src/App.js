@@ -20,8 +20,7 @@ const anecdotes = [
 const App = () => {
   const [selected, setSelected] = useState(0);
 
-  const points = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 };
-  // '0'.repeat(anecdotes.length).split('').map(parseFloat);
+  const points = '0'.repeat(anecdotes.length).split('').map(parseFloat);
   const copy = {...points}
   const [vote, setVote] = useState(copy);
 
@@ -43,6 +42,10 @@ const App = () => {
       <Button style={{ marginRight: '1rem' }} onClick={voteAnecdote} text='Vote' />
       
       <Button onClick={genRandAnecdote} text='Next Anecdote'/>
+
+      <h1>Anecdote with most votes</h1>
+
+
     </div>
   )
 }
