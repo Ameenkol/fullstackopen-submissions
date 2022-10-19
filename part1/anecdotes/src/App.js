@@ -1,5 +1,9 @@
 import { useState } from 'react'
 
+const Heading = (props) => (
+  <h1>{props.text}</h1>
+)
+
 const Button = (props) => {
   return (
     <button style={props.style} onClick={props.onClick}>{props.text}</button>
@@ -24,10 +28,14 @@ const App = () => {
   const copy = {...points}
   const [vote, setVote] = useState(copy);
 
-
+  
   const voteAnecdote = () => {
     setVote({...vote, [selected]: vote[selected] += 1})
   }
+
+  const values = Object.values(vote);
+
+  const maxVoteIndex = values.indexOf(Math.max(...values));
 
   const genRandAnecdote = () => {
     setSelected(Math.floor(Math.random() * anecdotes.length));
@@ -35,6 +43,8 @@ const App = () => {
   
   return (
     <div>
+      <Heading text='Anecdote of the day' />
+      
       {anecdotes[selected]}
       <br />
       <p>has {vote[selected]} votes</p>
@@ -43,8 +53,15 @@ const App = () => {
       
       <Button onClick={genRandAnecdote} text='Next Anecdote'/>
 
-      <h1>Anecdote with most votes</h1>
-
+      <Heading text='Anecdote with most votes'/>
+      {
+        values.every((value) => value === 0) ?
+          <>
+            <h3>No anecdote with most votes to be displayed</h3>
+          </>
+        :
+          <p>{anecdotes[maxVoteIndex]}</p>
+      }
 
     </div>
   )
