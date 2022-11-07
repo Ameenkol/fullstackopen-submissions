@@ -1,12 +1,10 @@
 import { useState } from 'react';
+import Filter from "./Filter";
+import PersonForm from './PersonForm';
+import Persons from './Persons';
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-123456', id: 1 },
-    { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
-    { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
-    { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
-  ])
+  const [persons, setPersons] = useState([{name: '', number: '', id: Number('')}])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filterText, setFilterText] = useState('')
@@ -53,56 +51,27 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <div style={{maxHeight: "fit-content"}}>
-        Filter shown with
-          <input
-            value={filterText}
-            onChange={handleFilterChange}
-            type="text"
-            />
-        {filteredContacts.length > 0 ?
-          <ul style={{display: "flex", flexDirection: "column-reverse"}}>
-            {filteredContacts.map((each, index) => (
-              <li key={each.name+index}>
-                {each.name + ' ' + each.number}
-              </li>))}
-          </ul>
-          :
-          <p style={{fontStyle: "semi-bold"}}>No contact to show at the moment</p>}
-        
-      </div>
-      <h2>Add a new</h2>
-      <form onSubmit={addPerson}>
-        <div style={{marginBottom: '5px'}}>
-          name:
-          <input
-            value={newName}
-            onChange={handleNameChange}
-          />
-        </div>
 
-        <div style={{marginBottom: '5px'}}>
-          number:
-          <input
-            value={newNumber}
-            onChange={handleNumberChange}
-          />
-        </div>
+      <Filter
+        handleFilterChange={handleFilterChange}
+        filterText={filterText}
+        filteredContacts={filteredContacts}
+      />
 
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <h3>Add a new</h3>
+      <PersonForm
+        addPerson={addPerson}
+        newName={newName}
+        newNumber={newNumber}
+        handleNameChange={handleNameChange}
+        handleNumberChange={handleNumberChange}
+      />
 
-      <h2>Numbers</h2>
-
-      <ul style={{ listStyle: "none", display: "flex", flexDirection: "column" }}>
-        {persons.map((person, index) => (
-        <li key={person.name + index + person.id}>
-          {person.name} {' '}{person.number}
-        </li>
-      ))}
-      </ul>
+      <h3>Numbers</h3>
+      <Persons
+        persons={persons} 
+      />
+      
     </div>
   )
 }
