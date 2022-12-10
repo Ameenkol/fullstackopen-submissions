@@ -9,20 +9,28 @@ function App() {
   const [searchTerm, setSearchTerm] = useState('')
   const [show, setShow] = useState(false)
   const [filterResult, setFilterResult] = useState([])
+  const [weatherList, setWeatherList] = useState([])
 
   useEffect(() => {
     axios.get('https://restcountries.com/v3.1/all')
-    .then(res => {
-      setList(res.data)
-    })
-    
+      .then((response) => {
+        setList(response.data);
+      }) 
   }, [])
-
+    
+  const api_key = process.env.REACT_APP_API_KEY
+    
+  const getCountryWeather = async (capital) => {
+    const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${capital}&appid=${api_key}`)
+      
+    setWeatherList(response.data)
+  }
+  
   const handleChange = (e) => {
     let lowerCase = e.target.value.toLowerCase()
     setSearchTerm(lowerCase)
   }
-
+  
   const countryToShow = list.filter((country) => {
     if (searchTerm === '') {
       return null
@@ -30,12 +38,13 @@ function App() {
     
     return country.name.common.toLowerCase().includes(searchTerm)
   })
-
-
+  
+  
   const showDetails = (i) => {
     setShow(true)
     const countryToDisplay = countryToShow[i];
     setFilterResult(countryToDisplay)
+    getCountryWeather(countryToDisplay.capital)
   }
 
   return (
@@ -56,6 +65,7 @@ function App() {
         showDetails={showDetails}
         show={show}
         filterResult={filterResult}
+        weatherList={weatherList}
         />
     </div>
   );

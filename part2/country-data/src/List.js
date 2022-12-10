@@ -1,5 +1,5 @@
 
-const List = ({ countryToShow, showDetails, show, filterResult }) => {
+const List = ({ countryToShow, showDetails, show, filterResult, weatherList }) => {
 
   return (
      <div style={{maxHeight: 'fit-content', listStyle:'none'}}>
@@ -29,8 +29,8 @@ const List = ({ countryToShow, showDetails, show, filterResult }) => {
 
             <div>
               <h2>{filterResult.name.common}</h2>
-              <p>{filterResult.capital}</p>
-              <p>{filterResult.area}</p>
+              <p>capital: {filterResult.capital}</p>
+              <p>Area: {filterResult.area}</p>
 
               <h4>Languages</h4>
                 <ul>
@@ -39,8 +39,12 @@ const List = ({ countryToShow, showDetails, show, filterResult }) => {
                   </li>
                 </ul>
               <>
-              <img src={filterResult.flags.png} alt='flag'/>
-            </>
+                <img src={filterResult.flags.png} alt='flag' style={{ scale: '50%' }} />
+              </>
+              <h3>Weather in {weatherList.name}</h3>
+              <p>Temperature: {weatherList.main?.temp}</p>
+              <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="weather_cond" />
+              <p>Wind: {weatherList.wind?.speed} m/s</p>
             </div>
           )
           :

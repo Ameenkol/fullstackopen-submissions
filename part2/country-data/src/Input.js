@@ -10,7 +10,7 @@ const Input = ({handleChange, searchTerm}) => {
         onChange={handleChange}
         style={{
           width: '15rem', height: '2rem', border: '1px solid blue',
-        borderRadius:'5px'}}
+        borderRadius:'5px', outline: 'none'}}
       />
     </div>
   )
