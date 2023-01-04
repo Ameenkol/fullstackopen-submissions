@@ -31,14 +31,25 @@ const App = () => {
       number: newNumber,
       id: persons.length + 1
     }
-    
+
+    axios.post('http://localhost:3001/persons', personObj)
+      .then((response) => {
+        return response.data
+        })
+
     setPersons(persons.concat(personObj));
     setNewName('')
     setNewNumber('')
   }
 
-  const filters = persons.filter((person) => person.name === filterText);
-  const filteredContacts = filterPerson.concat(filters)
+  const filters = persons.filter((person) => {
+    if (filterText === '') {
+      return null;
+    }
+    return person.name.toLowerCase().includes(filterText)
+  });
+  
+  const filteredContacts = filters
 
   const handleNameChange = (e) => {
     setNewName(e.target.value)
