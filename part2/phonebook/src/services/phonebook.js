@@ -12,8 +12,14 @@ const create = (personObj) => {
     return request.then(res => res.data)
 }
 
+const erase = (id) => { 
+  const request = axios.delete(`${baseUrl}/${id}`)
+  return request.then(res => res.data)
+}
+
 /* eslint import/no-anonymous-default-export: [2, {"allowObject": true}] */
 export default {
   getAll,
   create,
+  erase
 }

@@ -30,7 +30,7 @@ const App = () => {
     const personObj = {
       name: newName,
       number: newNumber,
-      id: persons.length + 1
+      id: persons[-1]?.id + 1
     }
 
     axios.post('http://localhost:3001/persons', personObj)
@@ -65,6 +65,21 @@ const App = () => {
     setFilterPerson(filteredContacts)
   }
 
+  const handleDelete = (person) => {
+    const alert = window.confirm(`Delete ${person['name']} from Phonebook?`);
+    if (alert) {
+      phonebookService
+      .erase(person.id)
+      .then((id) => {
+          setPersons(persons.filter(person => person.id !== id))
+        })
+      .catch((error) => {
+        alert(error.message)
+      })
+    }
+    return
+  }
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -87,6 +102,7 @@ const App = () => {
       <h3>Numbers</h3>
       <Persons
         persons={persons} 
+        handleDelete={handleDelete}
       />
       
     </div>

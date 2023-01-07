@@ -6,11 +6,6 @@
       "id": 1
     },
     {
-      "name": "Ada Lovelace",
-      "number": "39-44-5323523",
-      "id": 2
-    },
-    {
       "name": "Dan Abramov",
       "number": "12-43-234345",
       "id": 3
@@ -21,9 +16,14 @@
       "id": 4
     },
     {
+      "name": "Bashir Garba",
+      "number": "07066543-54",
+      "id": 6
+    },
+    {
       "name": "Ameen Garba",
       "number": "08161665061",
-      "id": 5
+      "id": 7
     }
   ]
 }
