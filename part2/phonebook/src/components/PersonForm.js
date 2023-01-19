@@ -8,7 +8,7 @@ const PersonForm = ({ addPerson, newName,
     <div>
       <form onSubmit={addPerson}>
         <div style={{marginBottom: '5px'}}>
-          name:
+          name: {' '}
           <input
             value={newName}
             onChange={handleNameChange}
@@ -16,7 +16,7 @@ const PersonForm = ({ addPerson, newName,
         </div>
 
         <div style={{marginBottom: '5px'}}>
-          number:
+          number:{' '}
           <input
             value={newNumber}
             onChange={handleNumberChange}

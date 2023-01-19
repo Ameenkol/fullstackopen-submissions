@@ -5,7 +5,7 @@ const Persons = ({persons, handleDelete}) => {
     <div>
       <ul style={{ listStyle: "none", display: "flex", flexDirection: "column" }}>
         {persons.map((person, index) => (
-        <li key={person.name + index + person.id}>
+        <li className='contactlist' key={person.name + index + person.id}>
             {person.name} {' '}{person.number}{' '}
             <input
               type='button'

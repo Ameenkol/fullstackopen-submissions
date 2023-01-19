@@ -2,7 +2,7 @@
 const Filter = ({filterText, handleFilterChange, filteredContacts}) => {
   return (
      <div style={{maxHeight: "fit-content"}}>
-        Filter shown with
+        Filter shown with {' '}
           <input
             value={filterText}
             onChange={handleFilterChange}

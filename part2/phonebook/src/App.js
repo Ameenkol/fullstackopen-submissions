@@ -1,8 +1,10 @@
-import { useState, useEffect } from 'react';
-import Filter from "./Filter";
-import PersonForm from './PersonForm';
-import Persons from './Persons';
+import { useState, useEffect} from 'react';
+import Filter from "./components/Filter";
+import PersonForm from './components/PersonForm';
+import Persons from './components/Persons';
 import phonebookService from './services/phonebook';
+import Notification from './components/Notification';
+import './App.css';
 
 const App = () => {
   const [persons, setPersons] = useState([{name: '', number: '', id: Number('')}])
@@ -10,6 +12,9 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [filterText, setFilterText] = useState('')
   const [filterPerson, setFilterPerson] = useState([])
+  const [notification, setNotification] = useState('')
+  const [isError, setIsError] = useState(false)
+
   
   useEffect(() => {
     phonebookService
@@ -30,11 +35,24 @@ const App = () => {
           .update(contactToEdit?.id, editedContact)
           .then((returnedContact) => {
             setPersons(persons.map(person => person.id === id ? returnedContact : person))
-            setNewName('')
-            setNewNumber('')
+            setIsError(isError)
+            setNotification(`Contact ${contactToEdit.name} new phone number has been updated successfully`)
+            
+            setTimeout(() => {
+              setNotification('')
+              setPersons(persons.map((person) => person))
+              setNewName('')
+              setNewNumber('')
+            }, 5000)
           })
           .catch((error) => {
-            alert(error.message)
+            setIsError(!isError)
+            setNotification(`Sorry, contact ${contactToEdit.name} has been deleted from the database`)
+            
+            setTimeout(() => {
+              setNotification('')
+              setPersons(persons.map((person) => person))
+            }, 5000)
           })
       }
         return;
@@ -50,9 +68,24 @@ const App = () => {
     .create(personObj)
     .then((createdContact) => {
       setPersons(persons.concat(createdContact));
+      setIsError(isError)
+      setNotification(`Added ${createdContact.name} successfully`)
       setNewName('')
       setNewNumber('')
-      })
+
+      setTimeout(() => {
+        setNotification('')
+      }, 5000)
+    })
+      .catch((error) => {
+      setIsError(!isError)
+      setNotification(`Sorry, couldn't add ${personObj.name}`)
+    
+      setTimeout(() => {
+        setNotification('')
+        setPersons(persons.map((person) => person))
+      }, 5000)
+    })
   }
 
   const filters = persons.filter((person) => {
@@ -82,11 +115,23 @@ const App = () => {
     if (alert) {
       phonebookService
       .erase(person.id)
-      .then((id) => {
+        .then((id) => {
+        setIsError(isError)
+        setNotification(`${person['name']} has been deleted successfully`)
+
+        setTimeout(() => {
+          setNotification('')
           setPersons(persons.filter(person => person.id !== id))
-        })
-      .catch((error) => {
-        alert(error.message)
+      }, 5000)
+      })
+        .catch((error, id) => {
+        setIsError(!isError)
+        setNotification(`${person['name']} has already been deleted`)
+        
+        setTimeout(() => {
+          setNotification('')
+          setPersons(persons.filter(person => person.id !== id))
+      }, 5000)
       })
     }
     return
@@ -95,6 +140,8 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+
+      <Notification message={notification} error={isError} />
 
       <Filter
         handleFilterChange={handleFilterChange}
